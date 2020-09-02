@@ -1,11 +1,24 @@
 from sympy import *
 from sympy import (
     symbols, init_printing, nsimplify, solve, S, pprint, pi,
-    Matrix
+    Matrix, integrate, sqrt, sympify
 )
 
 
-x, y, z = symbols('x y z', real=True)
+x, y, z, t = symbols('x y z t', real=True)
+
+
+def arc_length(vec, start, end):
+    pprint(vec)
+    derivs = 0
+
+    for i in vec:
+        derivs += i.diff(t)**2
+
+    integrand = sqrt(derivs)
+    result = integrate(integrand, (t, start, end))
+
+    return nsimplify(result, [pi])
 
 
 def gradient(eq, point=None, verbose=True):
