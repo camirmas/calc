@@ -1,4 +1,5 @@
 from sympy import *
+from sympy.vector import matrix_to_vector, CoordSys3D
 from sympy import (
     symbols, init_printing, nsimplify, solve, S, pprint, pi,
     Matrix, integrate, sqrt, sympify
@@ -6,6 +7,42 @@ from sympy import (
 
 
 x, y, z, t = symbols('x y z t', real=True)
+C = CoordSys3D('C')
+
+
+def project(u, v):
+    """Projects vector u onto vector v."""
+    u = matrix_to_vector(Matrix(u), C)
+    v = matrix_to_vector(Matrix(v), C)
+    m_v = v.magnitude()
+
+    scal = u.dot(v)/m_v
+    pprint(scal)
+
+    return scal*(v/m_v)
+
+
+def dot(v1, v2):
+    return Matrix(v1).dot(Matrix(v2))
+
+
+def cross(u, v):
+    u = matrix_to_vector(Matrix(u), C)
+    v = matrix_to_vector(Matrix(v), C)
+
+    return u.cross(v)
+
+
+def magnitude(v):
+    v = matrix_to_vector(Matrix(v), C)
+
+    return v.magnitude()
+
+
+def plane(v, point):
+    (x_p, y_p, z_p) = point
+
+    return nsimplify(v[0]*(x - x_p) + v[1]*(y - y_p) + v[2]*(z - z_p))
 
 
 def arc_length(vec, start, end):
