@@ -39,6 +39,12 @@ def magnitude(v):
     return v.magnitude()
 
 
+def unit(v):
+    v = matrix_to_vector(Matrix(v), C)
+
+    return v.normalize()
+
+
 def plane(v, point):
     (x_p, y_p, z_p) = point
 
